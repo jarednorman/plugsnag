@@ -12,6 +12,7 @@ defmodule Plugsnag.BasicErrorReportBuilderTest do
       conn
       |> put_req_header("accept", "application/json")
       |> put_req_header("x-user-id", "abc123")
+      |> put_resp_header("x-request-id", "42")
 
     error_report = BasicErrorReportBuilder.build_error_report(
       %ErrorReport{}, conn
@@ -26,6 +27,7 @@ defmodule Plugsnag.BasicErrorReportBuilderTest do
           url: "http://#{conn.host}/?hello=computer",
           port: 80,
           scheme: :http,
+          request_id: "42",
           query_string: "hello=computer",
           params: %{"hello" => "computer"},
           headers: %{
